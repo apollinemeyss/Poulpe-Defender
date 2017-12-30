@@ -3,9 +3,9 @@
 import pygame
 from pygame.locals import *
 
-# Creation classe terrain
+# Creation classe poulpe
 class Poulpe:
-    # fonction d'initialisation, lancé lors de la création
+    # fonction d'initialisation, lancée lors de la création
     def __init__(self,pygame):
         self.pygame = pygame
         self.poulpe = self.pygame.image.load("poulpe.png").convert_alpha()
@@ -13,13 +13,13 @@ class Poulpe:
         self.position.center = 320,420 #Position initiale du poulpe
 
     def allerAdroite(self):
-        self.position = self.position.move(-5,0)
+        self.position = self.position.move(-5,0)#self: convention python pour indiquer que c'est sa propre position 
 
     def allerAgauche(self):
         self.position = self.position.move(5,0)
 
     def getPoulpe(self):
-        return self.poulpe
+        return self.poulpe #on a besoin de return pour pouvoir rappeler l'image dans le main
 
     def getPosition(self):
-        return self.position
+        return self.position #pour pouvoir rappeler la position du poulpe (définie ici dans sa classe) dans le main

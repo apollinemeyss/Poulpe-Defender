@@ -3,15 +3,17 @@
 from poulpe import Poulpe
 from score import Score
 from invaders import Invaders
+#on a importé tous les objets/classes et leurs fonctions associées 
 import pygame
 import time
 from pygame.locals import *
 
 pygame.init()
+#la bibliothèque pygame est importée et initialisée
 
-fenetre = pygame.display.set_mode((640, 480), RESIZABLE)
+fenetre = pygame.display.set_mode((640, 480), RESIZABLE)#on définie la fenetre et ses dimensions 
 fond = pygame.image.load("background_espace.png").convert()#On définie l'image background_espace comme fond de l'interface
-fenetre.blit(fond, (0,0))
+fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
 
 # creation du poulpe en initialisant un objet poulpe depuis la class Poulpe
 poulpe = Poulpe(pygame)
@@ -24,27 +26,29 @@ for i in range(0,10):
     list_invaders.append(Invaders(pygame,100+i*50,200))
     fenetre.blit(list_invaders[i].getInvaders(), (100,200))
 
-pygame.display.flip() 
+pygame.display.flip() #rafraichissment de l'image pour faire apparaitre les invaders, le poulpe et le fond 
 
 score = Score('Leo')
 score.ajouterPoint()
 print(score.recupererPoint())
 
+#creation  d'un boucle infinie pour que le jeu ne se ferme pas
 continuer = 1
-pygame.key.set_repeat(1,30)
+pygame.key.set_repeat(1,30)#on defini l'affichage d'une image toutes les 30ms
 while continuer:
-        for event in pygame.event.get():
-                if event.type == QUIT:
-                        continuer = 0
-                if event.type == KEYDOWN:
-                        if event.key == K_LEFT:                                 #Lorsque l'on va appuyer sur la flèche de droite
-                            poulpe.allerAdroite()     #Le poulpe va se déplacer de 5px vers la droite
-                        if event.key == K_RIGHT:                                #Lorsque l'on va appuyer sur la flèche de gauche
-                            poulpe.allerAgauche()       #Le poulpe va se déplacer de 5px vers la gauche
-        fenetre.blit(fond, (0,0))
-        fenetre.blit(poulpe.getPoulpe(),poulpe.getPosition())
+        for event in pygame.event.get():#on parcours la liste de tous les évènements pouvant être reçus
+                if event.type == QUIT:#si l'évènement est de type QUIT (on clique sur la croix)
+                        continuer = 0 #on arrête la boucle 
+                if event.type == KEYDOWN: #si une touche du clavier est pressée 
+                        if event.key == K_LEFT: #Lorsque l'on va appuyer sur la flèche de droite
+                            poulpe.allerAdroite()   #Le poulpe va se déplacer de 5px vers la droite
+                        if event.key == K_RIGHT: #Lorsque l'on va appuyer sur la flèche de gauche
+                            poulpe.allerAgauche()   #Le poulpe va se déplacer de 5px vers la gauche
+
+        fenetre.blit(fond, (0,0))#on recolle le fond   
+        fenetre.blit(poulpe.getPoulpe(),poulpe.getPosition()) #on recolle le poulpe a sa nouvelle position 
 
         # on affiche les monstres
         for i in range(0,10):
-            fenetre.blit(list_invaders[i].getInvaders(), list_invaders[i].getPosition())
-        pygame.display.flip()
+            fenetre.blit(list_invaders[i].getInvaders(), list_invaders[i].getPosition())#collage de l'image et de la position de chaque monstre
+        pygame.display.flip()#rafraichissement de l'écran 
