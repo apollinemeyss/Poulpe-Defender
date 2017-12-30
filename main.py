@@ -10,21 +10,21 @@ from pygame.locals import *
 pygame.init()
 
 fenetre = pygame.display.set_mode((640, 480), RESIZABLE)
-fond = pygame.image.load("background_espace.png").convert()#On définie l'image background_espace comme fond de l'interface
+fond = pygame.image.load("background_espace.png").convert()#On dÃ©finie l'image background_espace comme fond de l'interface
 fenetre.blit(fond, (0,0))
 
 # creation du poulpe en initialisant un objet poulpe depuis la class Poulpe
 poulpe = Poulpe(pygame)
 fenetre.blit(poulpe.getPoulpe(), (200,300))
 
-# Création de la liste des invaders
+# CrÃ©ation de la liste des invaders
 list_invaders = []
 for i in range(0,10):
-    # on fait i*50 pour décaler les monstres
+    # on fait i*50 pour dÃ©caler les monstres
     list_invaders.append(Invaders(pygame,100+i*50,200))
     fenetre.blit(list_invaders[i].getInvaders(), (100,200))
 
-pygame.display.flip()
+pygame.display.flip() 
 
 score = Score('Leo')
 score.ajouterPoint()
@@ -37,10 +37,10 @@ while continuer:
                 if event.type == QUIT:
                         continuer = 0
                 if event.type == KEYDOWN:
-                        if event.key == K_LEFT:                                 #Lorsque l'on va appuyer sur la flèche de droite
-                            poulpe.allerAdroite()     #Le poulpe va se déplacer de 5px vers la droite
-                        if event.key == K_RIGHT:                                #Lorsque l'on va appuyer sur la flèche de gauche
-                            poulpe.allerAgauche()       #Le poulpe va se déplacer de 5px vers la gauche
+                        if event.key == K_LEFT:                                 #Lorsque l'on va appuyer sur la flÃ¨che de droite
+                            poulpe.allerAdroite()     #Le poulpe va se dÃ©placer de 5px vers la droite
+                        if event.key == K_RIGHT:                                #Lorsque l'on va appuyer sur la flÃ¨che de gauche
+                            poulpe.allerAgauche()       #Le poulpe va se dÃ©placer de 5px vers la gauche
         fenetre.blit(fond, (0,0))
         fenetre.blit(poulpe.getPoulpe(),poulpe.getPosition())
 
