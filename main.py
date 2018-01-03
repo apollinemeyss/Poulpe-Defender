@@ -56,13 +56,13 @@ while continuer:
         pygame.display.flip()#rafraichissement de l'écran
 
         #on fait bouger les monstres 
-        #while getPosition(list_invaders[9])!= 150,300:
+        #while getPosition(list_invaders[9])!= 150,300:"
         for i in range (0,10):
             list_invaders[i].allerAdroite()
         fenetre.blit(list_invaders[i].getInvaders(), list_invaders[i].getPosition())
         pygame.display.flip()
         clock.tick(20)
-        #pygame.time.delay(100)
+        #pygame.time.delay(100)"
 
 
 
