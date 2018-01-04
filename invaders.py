@@ -13,17 +13,11 @@ class Invaders:
         self.position.center = x,y
         #abscisse = x"
         #ordonnée = y"
-
-    #def deplace(self, dx, dy):"
-        #self.x=self.x+dx"
-        #self.y=self.y+dy"
         
     def allerAdroite(self):
         self.position = self.position.move(5,0)
-        #if x>640:"
-           #x=640"
-        #if x<0:"
-            #x=O"
+        #if self.position.center > 640, y:
+            #self.position.center = 640, y 
 
     def allerAgauche(self):
         self.position = self.position.move(-5,0)
@@ -34,5 +28,5 @@ class Invaders:
     def getPosition(self):
         return self.position
 
-    #def getAbscisse(self):"
-        #return x"
+    #def getAbscisse(self):
+        #return x

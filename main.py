@@ -58,6 +58,7 @@ while continuer:
         #on fait bouger les monstres 
         #while getPosition(list_invaders[9])!= 150,300:"
         for i in range (0,10):
+        #while Invaders.getAbscisse < 640:
             list_invaders[i].allerAdroite()
         fenetre.blit(list_invaders[i].getInvaders(), list_invaders[i].getPosition())
         pygame.display.flip()
