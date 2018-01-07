@@ -13,7 +13,7 @@ pygame.init()
 
 clock = pygame.time.Clock()
 
-fenetre = pygame.display.set_mode((640, 480), RESIZABLE)#on définie la fenetre et ses dimensions 
+fenetre = pygame.display.set_mode((800, 600), RESIZABLE)#on définie la fenetre et ses dimensions 
 fond = pygame.image.load("background_espace.png").convert()#On définie l'image background_espace comme fond de l'interface
 fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
 
@@ -37,6 +37,8 @@ print(score.recupererPoint())
 #creation  d'un boucle infinie pour que le jeu ne se ferme pas
 continuer = 1
 pygame.key.set_repeat(1,30) #on defini l'affichage d'une image toutes les 30ms
+stop_invaders_a_droite = False
+stop_invaders_a_gauche = True
 while continuer:
         for event in pygame.event.get():   #on parcours la liste de tous les évènements pouvant être reçus
                 if event.type == QUIT:    #si l'évènement est de type QUIT (on clique sur la croix)
@@ -46,23 +48,30 @@ while continuer:
                             poulpe.allerAdroite()       #Le poulpe va se déplacer de 5px vers la droite
                         if event.key == K_RIGHT:    #Lorsque l'on va appuyer sur la flèche de gauche
                             poulpe.allerAgauche()       #Le poulpe va se déplacer de 5px vers la gauche
-
+                      
         fenetre.blit(fond, (0,0))   #on recolle le fond   
         fenetre.blit(poulpe.getPoulpe(),poulpe.getPosition())   #on recolle le poulpe a sa nouvelle position 
 
         # on affiche les monstres
         for i in range(0,10):
             fenetre.blit(list_invaders[i].getInvaders(), list_invaders[i].getPosition())#collage de l'image et de la position de chaque monstre
-        pygame.display.flip()#rafraichissement de l'écran
 
         #on fait bouger les monstres 
-        #while getPosition(list_invaders[9])!= 150,300:"
-        for i in range (0,10):
-        #while Invaders.getAbscisse < 640:
-            list_invaders[i].allerAdroite()
-        fenetre.blit(list_invaders[i].getInvaders(), list_invaders[i].getPosition())
+        
+        if not(stop_invaders_a_droite):
+            for i in range (0,10):
+                if not(list_invaders[i].allerAdroite()):
+                    stop_invaders_a_droite = True
+                    stop_invaders_a_gauche = False
+                
+        elif not(stop_invaders_a_gauche):
+            for i in range (0,10):
+                if not(list_invaders[i].allerAgauche()):
+                    stop_invaders_a_gauche = True
+                    stop_invaders_a_droite = False
+                    
         pygame.display.flip()
-        clock.tick(20)
+        clock.tick(24)
         #pygame.time.delay(100)"
 
 

@@ -10,17 +10,20 @@ class Invaders:
         self.pygame = pygame
         self.invaders = self.pygame.image.load("invaders.png").convert_alpha()#alpha pour enlever la partie blanche autour de l'image 
         self.position = self.invaders.get_rect()
-        self.position.center = x,y
-        #abscisse = x"
-        #ordonnée = y"
+        self.position.center = x,y # position initial du rectangle
+       
         
     def allerAdroite(self):
-        self.position = self.position.move(5,0)
-        #if self.position.center > 640, y:
-            #self.position.center = 640, y 
+        if (self.position.x + 5 < (650 + 25 )) and ( self.position.x + 5 > 0):
+            self.position = self.position.move(5,0)
+            return True
+        return False
 
     def allerAgauche(self):
-        self.position = self.position.move(-5,0)
+        if (self.position.x - 5 < (700 + 25 )) and ( self.position.x - 5 > 0):
+            self.position = self.position.move(-5,0)
+            return True
+        return False
 
     def getInvaders(self):
         return self.invaders
@@ -28,5 +31,4 @@ class Invaders:
     def getPosition(self):
         return self.position
 
-    #def getAbscisse(self):
-        #return x
+    
