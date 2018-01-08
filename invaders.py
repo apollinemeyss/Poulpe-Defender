@@ -25,6 +25,9 @@ class Invaders:
             return True
         return False
 
+    def descendre(self):
+        self.position = self.position.move(0,5)
+
     def getInvaders(self):
         return self.invaders
 

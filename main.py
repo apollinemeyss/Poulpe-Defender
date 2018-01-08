@@ -56,19 +56,26 @@ while continuer:
         for i in range(0,10):
             fenetre.blit(list_invaders[i].getInvaders(), list_invaders[i].getPosition())#collage de l'image et de la position de chaque monstre
 
-        #on fait bouger les monstres 
+        #on fait bouger les monstres
+
+        #while not(stop_invaders_a_droite):
+            #for i in range (0,10):
+                #list_invaders[i].allerAdroite()
+
         
         if not(stop_invaders_a_droite):
             for i in range (0,10):
                 if not(list_invaders[i].allerAdroite()):
                     stop_invaders_a_droite = True
                     stop_invaders_a_gauche = False
+                    list_invaders[i].descendre()
                 
         elif not(stop_invaders_a_gauche):
             for i in range (0,10):
                 if not(list_invaders[i].allerAgauche()):
                     stop_invaders_a_gauche = True
                     stop_invaders_a_droite = False
+                    list_invaders[i].descendre()
                     
         pygame.display.flip()
         clock.tick(24)
