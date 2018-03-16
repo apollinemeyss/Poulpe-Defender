@@ -30,9 +30,10 @@ for i in range(0,10):
 
 pygame.display.flip() #rafraichissment de l'image pour faire apparaitre les invaders, le poulpe et le fond 
 
-score = Score('Leo')
-score.ajouterPoint()
-print(score.recupererPoint())
+#score
+#score = Score('Leo')
+#score.ajouterPoint()
+#print(score.recupererPoint())
 
 #creation  d'un boucle infinie pour que le jeu ne se ferme pas
 continuer = 1
@@ -56,13 +57,8 @@ while continuer:
         for i in range(0,10):
             fenetre.blit(list_invaders[i].getInvaders(), list_invaders[i].getPosition())#collage de l'image et de la position de chaque monstre
 
+
         #on fait bouger les monstres
-
-        #while not(stop_invaders_a_droite):
-            #for i in range (0,10):
-                #list_invaders[i].allerAdroite()
-
-        
         if not(stop_invaders_a_droite):
             for i in range (0,10):
                 if not(list_invaders[i].allerAdroite()):
@@ -79,9 +75,42 @@ while continuer:
                     for a in range(0,10):
                         list_invaders[a].descendre()
                     
+
+        #essais pour faire en sorte que si les invaders touchent le poulpe
+        #ça fasse game over
+
+        #x=Poulpe.getPosition(self)
+        #print (x)
+
+        
+        for i in range (0,10):
+            if list_invaders[i].getPosition==Poulpe.getPosition:
+                print("Game Over")
+
+
+
+
+
+
+
         pygame.display.flip()
-        clock.tick(20)
+        clock.tick(40)
         #pygame.time.delay(100)"
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
