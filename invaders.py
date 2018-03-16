@@ -14,16 +14,20 @@ class Invaders:
        
         
     def allerAdroite(self):
-        if (self.position.x + 5 < (650 + 25 )) and ( self.position.x + 5 > 0):
+        if (self.position.x + 15  < 750 ) and ( self.position.x + 15 > 0):
             self.position = self.position.move(5,0)
             return True
+        self.position=self.position.move(5,0)
         return False
+        
 
     def allerAgauche(self):
-        if (self.position.x - 5 < (700 + 25 )) and ( self.position.x - 5 > 0):
+        if (self.position.x - 15 < 750) and ( self.position.x - 15 > 0):
             self.position = self.position.move(-5,0)
             return True
+        self.position=self.position.move(-5,0)
         return False
+        
 
     def descendre(self):
         self.position = self.position.move(0,5)

@@ -68,17 +68,19 @@ while continuer:
                 if not(list_invaders[i].allerAdroite()):
                     stop_invaders_a_droite = True
                     stop_invaders_a_gauche = False
-                    list_invaders[i].descendre()
+                    for a in range(0,10):
+                        list_invaders[a].descendre()
                 
         elif not(stop_invaders_a_gauche):
             for i in range (0,10):
                 if not(list_invaders[i].allerAgauche()):
                     stop_invaders_a_gauche = True
                     stop_invaders_a_droite = False
-                    list_invaders[i].descendre()
+                    for a in range(0,10):
+                        list_invaders[a].descendre()
                     
         pygame.display.flip()
-        clock.tick(24)
+        clock.tick(20)
         #pygame.time.delay(100)"
 
 
