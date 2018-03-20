@@ -83,15 +83,30 @@ while continuer:
         #print (x)
 
         
-        for i in range (0,10):
-            if list_invaders[i].getPosition==Poulpe.getPosition:
-                print("Game Over")
+        #for i in range (0,10):
+            #if list_invaders[i].getPosition==Poulpe.getPosition:
+                #print("Game Over")
+
+        #def collision(rectA,rectB):
+            #if Poulpe.self.position==Invaders.self.position:
+                # rectB est à gauche
+                #return False
+            #if rectB.bottom < rectA.top:
+                # rectB est au-dessus
+                #return False
+            #if rectB.left > rectA.right:
+                # rectB est à droite
+                #return False
+            #if rectB.top > rectA.bottom:
+                # rectB est en-dessous
+                #return False
+            #else:
+                # Dans tous les autres cas il y a collision
+                #return True
 
 
-
-
-
-
+        #if collision(Poulpe,Invaders):
+            #print("collision")
 
         pygame.display.flip()
         clock.tick(40)
@@ -99,7 +114,7 @@ while continuer:
 
 
         
-
+pygame.quit()
 
 
 

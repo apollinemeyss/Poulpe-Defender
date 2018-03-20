@@ -11,6 +11,7 @@ class Poulpe:
         self.poulpe = self.pygame.image.load("poulpe.png").convert_alpha()
         self.position = self.poulpe.get_rect()
         self.position.center = 320,420 #Position initiale du poulpe
+        
 
     def allerAdroite(self):
         self.position = self.position.move(-5,0)#self: convention python pour indiquer que c'est sa propre position 
