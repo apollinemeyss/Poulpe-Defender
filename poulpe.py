@@ -6,18 +6,22 @@ from pygame.locals import *
 # Creation classe poulpe
 class Poulpe:
     # fonction d'initialisation, lancée lors de la création
-    def __init__(self,pygame):
+    def __init__(self,pygame,x,y):
         self.pygame = pygame
         self.poulpe = self.pygame.image.load("poulpe.png").convert_alpha()
         self.position = self.poulpe.get_rect()
-        self.position.center = 320,420 #Position initiale du poulpe
+        self.position.center = x,y #Position initiale du poulpe
         
 
     def allerAdroite(self):
-        self.position = self.position.move(-5,0)#self: convention python pour indiquer que c'est sa propre position 
+        if (self.position.x + 15  < 750 ) and ( self.position.x + 15 > 0):
+            self.position = self.position.move(5,0)
+
 
     def allerAgauche(self):
-        self.position = self.position.move(5,0)
+        if (self.position.x - 15 < 750) and ( self.position.x - 15 > 0):
+            self.position = self.position.move(-5,0)
+
 
     def getPoulpe(self):
         return self.poulpe #on a besoin de return pour pouvoir rappeler l'image dans le main
