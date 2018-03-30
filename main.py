@@ -7,6 +7,7 @@ from invaders import Invaders
 import pygame
 import time
 from pygame.locals import *
+from pygame_functions import*
 
 pygame.init()
 #la bibliothèque pygame est importée et initialisée
@@ -18,9 +19,16 @@ fond = pygame.image.load("background_espace.png").convert()#On définie l'image 
 game_over = pygame.image.load("game_over.jpg").convert()
 fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
 
+
+
 # creation du poulpe en initialisant un objet poulpe depuis la class Poulpe
-poulpe = Poulpe(pygame,320,420)
+x = 320
+y = 420
+poulpe = Poulpe(pygame,x,y)
 fenetre.blit(poulpe.getPoulpe(), (200,300))
+
+#Creation de l'encre
+encre = []
 
 # Création de la liste des invaders
 list_invaders = []
@@ -28,6 +36,8 @@ for i in range(0,10):
     # on fait i*50 pour décaler les monstres
     list_invaders.append(Invaders(pygame,100+i*50,300)) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
     fenetre.blit(list_invaders[i].getInvaders(), (100,200)) #on colle les invaders en commençant par x=100,y=200
+    
+
     
 
 
@@ -51,8 +61,7 @@ def collision():
                 # Dans tous les autres cas il y a collision
             return True
 
-        
-        
+
 
 
 pygame.display.flip() #rafraichissment de l'image pour faire apparaitre les invaders, le poulpe et le fond 
@@ -61,6 +70,7 @@ pygame.display.flip() #rafraichissment de l'image pour faire apparaitre les inva
 #score = Score('Leo')
 #score.ajouterPoint()
 #print(score.recupererPoint())
+
 
 #creation  d'un boucle infinie pour que le jeu ne se ferme pas
 continuer = 1
@@ -78,12 +88,9 @@ while continuer:
                         if event.key == K_RIGHT:    #Lorsque l'on va appuyer sur la flèche de droite
                             poulpe.allerAdroite()       #Le poulpe va se déplacer de 5px vers la droite
 
-                #Tir du poulpe
-                if event.type == KEYDOWN:
-                    if event.key == K_SPACE:
-                        tir = pygame.image.load("tir.png")
-                        fenetre.blit(tir, (position.poulpe.x, position.poulpe.y))
-                        pygame.display.flip
+
+                        
+                        
                 
                                            
 
@@ -122,6 +129,7 @@ while continuer:
 
         pygame.display.flip()
         clock.tick(40)
+
 
 
         
