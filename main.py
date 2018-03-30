@@ -28,6 +28,7 @@ for i in range(0,10):
     # on fait i*50 pour décaler les monstres
     list_invaders.append(Invaders(pygame,100+i*50,300)) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
     fenetre.blit(list_invaders[i].getInvaders(), (100,200)) #on colle les invaders en commençant par x=100,y=200
+    
 
 
 def collision():
@@ -77,6 +78,15 @@ while continuer:
                         if event.key == K_RIGHT:    #Lorsque l'on va appuyer sur la flèche de droite
                             poulpe.allerAdroite()       #Le poulpe va se déplacer de 5px vers la droite
 
+                #Tir du poulpe
+                if event.type == KEYDOWN:
+                    if event.key == K_SPACE:
+                        tir = pygame.image.load("tir.png")
+                        fenetre.blit(tir, (position.poulpe.x, position.poulpe.y))
+                        pygame.display.flip
+                
+                                           
+
         #print (collision())
         if collision():
             fenetre.blit(game_over, (0,0))   #on recolle le fond   
@@ -107,6 +117,8 @@ while continuer:
                         stop_invaders_a_droite = False
                         for a in range(0,10):
                             list_invaders[a].descendre()
+
+        
 
         pygame.display.flip()
         clock.tick(40)
