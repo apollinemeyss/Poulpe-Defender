@@ -7,7 +7,6 @@ from invaders import Invaders
 import pygame
 import time
 from pygame.locals import *
-from pygame_functions import*
 
 pygame.init()
 #la bibliothèque pygame est importée et initialisée
@@ -17,7 +16,9 @@ clock = pygame.time.Clock()
 fenetre = pygame.display.set_mode((800, 600))#on définie la fenetre et ses dimensions 
 fond = pygame.image.load("background_espace.png").convert()#On définie l'image background_espace comme fond de l'interface
 game_over = pygame.image.load("game_over.jpg").convert()
+tir = pygame.image.load("tir.png").convert()
 fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
+pygame.display.flip()
 
 
 
@@ -27,8 +28,6 @@ y = 420
 poulpe = Poulpe(pygame,x,y)
 fenetre.blit(poulpe.getPoulpe(), (200,300))
 
-#Creation de l'encre
-encre = []
 
 # Création de la liste des invaders
 list_invaders = []
@@ -38,7 +37,8 @@ for i in range(0,10):
     fenetre.blit(list_invaders[i].getInvaders(), (100,200)) #on colle les invaders en commençant par x=100,y=200
     
 
-    
+
+
 
 
 def collision():
@@ -80,7 +80,8 @@ stop_invaders_a_gauche = True
 while continuer:
         for event in pygame.event.get():   #on parcours la liste de tous les évènements pouvant être reçus
                 if event.type == QUIT:    #si l'évènement est de type QUIT (on clique sur la croix)
-                        continuer = 0   #on arrête la boucle 
+                        continuer = 0   #on arrête la boucle
+                
                 if event.type == KEYDOWN:   #si une touche du clavier est pressée 
                         if event.key == K_LEFT:   #Lorsque l'on va appuyer sur la flèche de gauche
                             poulpe.allerAgauche()       #Le poulpe va se déplacer de 5px vers la gauche
@@ -88,6 +89,14 @@ while continuer:
                         if event.key == K_RIGHT:    #Lorsque l'on va appuyer sur la flèche de droite
                             poulpe.allerAdroite()       #Le poulpe va se déplacer de 5px vers la droite
 
+                        if event.key == K_ESCAPE:
+                            continuer = 0
+
+        for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                        if event.key == K_SPACE:
+                            fenetre.blit(tir, (200,300))#NE FONCTIONNE PAS !
+        
 
                         
                         
