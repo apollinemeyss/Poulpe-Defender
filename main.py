@@ -18,6 +18,7 @@ fond = pygame.image.load("background_espace.png").convert()#On définie l'image 
 game_over = pygame.image.load("game_over.jpg").convert()
 tir = pygame.image.load("tir.png").convert()
 fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
+
 pygame.display.flip()
 
 
@@ -36,7 +37,7 @@ for i in range(0,10):
     list_invaders.append(Invaders(pygame,100+i*50,300)) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
     fenetre.blit(list_invaders[i].getInvaders(), (100,200)) #on colle les invaders en commençant par x=100,y=200
     
-
+    
 
 
 
@@ -74,7 +75,7 @@ pygame.display.flip() #rafraichissment de l'image pour faire apparaitre les inva
 
 #creation  d'un boucle infinie pour que le jeu ne se ferme pas
 continuer = 1
-pygame.key.set_repeat(1,30) #on defini l'affichage d'une image toutes les 30ms
+pygame.key.set_repeat(1,10) #on defini l'affichage d'une image toutes les 10ms
 stop_invaders_a_droite = False
 stop_invaders_a_gauche = True
 while continuer:
