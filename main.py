@@ -93,8 +93,6 @@ while continuer:
                         if event.key == K_ESCAPE:
                             continuer = 0
 
-        for event in pygame.event.get():
-                if event.type == KEYDOWN:
                         if event.key == K_SPACE:
                             fenetre.blit(tir, (200,300))#NE FONCTIONNE PAS !
         
