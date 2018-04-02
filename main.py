@@ -17,10 +17,19 @@ fenetre = pygame.display.set_mode((800, 600))#on définie la fenetre et ses dime
 fond = pygame.image.load("background_espace.png").convert()#On définie l'image background_espace comme fond de l'interface
 game_over = pygame.image.load("game_over.jpg").convert()
 tir = pygame.image.load("tir.png").convert()
+
+
 fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
 
-pygame.display.flip()
-
+"""intro = pygame.image.load("scenario.png").convert
+intr = 1
+while intr:
+    fenetre.blit(intro, (0,0))
+    for event in pygame.event.get():
+        if event.type == KEYDOWN:
+            if event.key == K_SPACE:
+                intr = 0
+    pygame.display.flip()""" #Intro mais qui ne marche pas
 
 
 # creation du poulpe en initialisant un objet poulpe depuis la class Poulpe
@@ -71,6 +80,8 @@ pygame.display.flip() #rafraichissment de l'image pour faire apparaitre les inva
 #score = Score('Leo')
 #score.ajouterPoint()
 #print(score.recupererPoint())
+
+
 
 
 #creation  d'un boucle infinie pour que le jeu ne se ferme pas
