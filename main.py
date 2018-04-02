@@ -95,6 +95,7 @@ while continuer:
 
                         if event.key == K_SPACE:
                             fenetre.blit(tir, (200,300))#NE FONCTIONNE PAS !
+        pygame.display.flip()
         
 
                         
