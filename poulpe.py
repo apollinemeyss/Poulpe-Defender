@@ -28,3 +28,13 @@ class Poulpe:
 
     def getPosition(self):
         return self.position #pour pouvoir rappeler la position du poulpe (définie ici dans sa classe) dans le main
+
+    def getX(self):
+        return self.position.x
+    def getY(self):
+        return self.position.y
+
+
+    """getX = self.position.x
+
+    getY = self.position.y"""

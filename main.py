@@ -29,7 +29,18 @@ while intr:
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
                 intr = 0
-    pygame.display.flip()""" #Intro mais qui ne marche pas
+    pygame.display.flip() #Intro mais qui ne marche pas
+
+
+controle = pygame.image.load("controle.png").convert
+contr = 1
+while intr:
+    fenetre.blit(contr, (0,0))
+    for event in pygame.event.get():
+        if event.type == KEYDOWN:
+            if event.key == K_SPACE:
+                contr = 0
+    pygame.display.flip() """
 
 
 # creation du poulpe en initialisant un objet poulpe depuis la class Poulpe
@@ -45,8 +56,27 @@ for i in range(0,10):
     # on fait i*50 pour décaler les monstres
     list_invaders.append(Invaders(pygame,100+i*50,300)) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
     fenetre.blit(list_invaders[i].getInvaders(), (100,200)) #on colle les invaders en commençant par x=100,y=200
+
+tirer=0
+position_tir_y=0
+position_tir_x=0
+
+#creation du tir
+
+
+def tir():
     
-    
+    """_y = poulpe.self.position.y
+    print (tir_x)
+    print(tir_y)"""
+    tir_x=position_tir_x
+    print(tir_x)
+    fenetre.blit(tir, x,y)
+    pygame.display.flip()
+        
+        #tirer=0"""
+
+
 
 
 
@@ -105,10 +135,18 @@ while continuer:
                             continuer = 0
 
                         if event.key == K_SPACE:
-                            fenetre.blit(tir, (200,300))#NE FONCTIONNE PAS !
-        pygame.display.flip()
-        
+                            tirer=1
+                            #fenetre.blit(tir, (200,300))#NE FONCTIONNE PAS !
+                            print ("encre")
+        #pygame.display.flip()
 
+        if tirer==1:
+            position_tir_x=poulpe.getX()
+            position_tir_y=poulpe.getY()
+            
+            """print(position_tir_x)
+            print(position_tir_y)"""
+            tir()
                         
                         
                 
