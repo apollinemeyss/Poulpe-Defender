@@ -21,7 +21,7 @@ tir = pygame.image.load("tir.png").convert()
 
 fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
 
-"""intro = pygame.image.load("scenario.png").convert
+intro = pygame.image.load("scenario.png").convert
 intr = 1
 while intr:
     fenetre.blit(intro, (0,0))
@@ -32,7 +32,7 @@ while intr:
     pygame.display.flip() #Intro mais qui ne marche pas
 
 
-controle = pygame.image.load("controle.png").convert
+"""controle = pygame.image.load("controle.png").convert
 contr = 1
 while intr:
     fenetre.blit(contr, (0,0))
