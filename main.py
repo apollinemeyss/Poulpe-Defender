@@ -32,7 +32,7 @@ while intr:
     pygame.display.flip() #Intro mais qui ne marche pas
 
 
-"""controle = pygame.image.load("controle.png").convert
+controle = pygame.image.load("controle.png").convert
 contr = 1
 while intr:
     fenetre.blit(contr, (0,0))
@@ -40,7 +40,7 @@ while intr:
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
                 contr = 0
-    pygame.display.flip() """
+    pygame.display.flip() 
 
 
 # creation du poulpe en initialisant un objet poulpe depuis la class Poulpe
