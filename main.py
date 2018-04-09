@@ -3,6 +3,7 @@
 from poulpe import Poulpe
 from score import Score
 from invaders import Invaders
+from tir import Tir
 #on a importé tous les objets/classes et leurs fonctions associées 
 import pygame
 import time
@@ -21,7 +22,7 @@ tir = pygame.image.load("tir.png").convert()
 
 fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
 
-intro = pygame.image.load("scenario.png").convert
+"""intro = pygame.image.load("scenario.png").convert
 intr = 1
 while intr:
     fenetre.blit(intro, (0,0))
@@ -40,7 +41,21 @@ while intr:
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
                 contr = 0
-    pygame.display.flip() 
+    pygame.display.flip() """
+
+
+
+
+#creation de la liste des tirs
+a=0
+b=0
+list_tirs = []
+for t in range (0,5):
+    list_tirs.append(Tir(pygame,a,b))
+    
+
+
+
 
 
 # creation du poulpe en initialisant un objet poulpe depuis la class Poulpe
@@ -51,13 +66,26 @@ fenetre.blit(poulpe.getPoulpe(), (200,300))
 
 
 # Création de la liste des invaders
-list_invaders = []
-for i in range(0,10):
-    # on fait i*50 pour décaler les monstres
-    list_invaders.append(Invaders(pygame,100+i*50,300)) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
-    fenetre.blit(list_invaders[i].getInvaders(), (100,200)) #on colle les invaders en commençant par x=100,y=200
+
+list_invaders_v = [] #verts
+for v in range(0,10):
+    # on fait i*50 pour décaler les monstres     ?
+    list_invaders_v.append(Invaders(pygame,100+v*50,300)) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
+    fenetre.blit(list_invaders_v[v].getInvaders(), (100,200)) #on colle les invaders en commençant par x=100,y=200
+
+list_invaders_b = [] #bleus
+for b in range(0,10):
+    list_invaders_b.append(Invaders(pygame,100+b*50,200)) 
+    fenetre.blit(list_invaders_b[b].getInvaders(), (100,100))
+
+
+
+
+
 
 tirer=0
+
+"""
 position_tir_y=0
 position_tir_x=0
 
@@ -66,15 +94,17 @@ position_tir_x=0
 
 def tir():
     
-    """_y = poulpe.self.position.y
+    _y = poulpe.self.position.y
     print (tir_x)
-    print(tir_y)"""
+    print(tir_y)
     tir_x=position_tir_x
     print(tir_x)
     fenetre.blit(tir, x,y)
     pygame.display.flip()
         
-        #tirer=0"""
+        tirer=0
+    
+    """
 
 
 
@@ -136,21 +166,23 @@ while continuer:
 
                         if event.key == K_SPACE:
                             tirer=1
+                            a=poulpe.getX()
+                            b=poulpe.getY()
                             #fenetre.blit(tir, (200,300))#NE FONCTIONNE PAS !
-                            print ("encre")
+                            #print ("encre")
         #pygame.display.flip()
 
         if tirer==1:
-            position_tir_x=poulpe.getX()
+            print ("encre")
+            fenetre.blit(list_tirs[t].getTirs(),(a,b))
+            tirer = 0 
+            """position_tir_x=poulpe.getX()
             position_tir_y=poulpe.getY()
             
-            """print(position_tir_x)
-            print(position_tir_y)"""
-            tir()
-                        
-                        
-                
-                                           
+            print(position_tir_x)
+            print(position_tir_y)
+            tir()"""
+                                          
 
         #print (collision())
         if collision():
