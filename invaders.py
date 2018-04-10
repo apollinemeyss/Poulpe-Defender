@@ -6,9 +6,13 @@ from pygame.locals import *
 # Creation classe invaders
 class Invaders:
     # fonction d'initialisation, lancé lors de la création
-    def __init__(self,pygame,x,y):
+    def __init__(self,pygame,x,y,couleur):
         self.pygame = pygame
-        self.invaders = self.pygame.image.load("invaders.png").convert_alpha()#alpha pour enlever la partie blanche autour de l'image 
+        if couleur == "verts":
+            self.invaders = self.pygame.image.load("invaders.png").convert_alpha()#alpha pour enlever la partie blanche autour de l'image
+        elif couleur == "rouges":
+            self.invaders = self.pygame.image.load("invaders_rouges.png").convert_alpha()#alpha pour enlever la partie blanche autour de l'image
+             
         self.position = self.invaders.get_rect()
         self.position.center = x,y # position initial du rectangle
        

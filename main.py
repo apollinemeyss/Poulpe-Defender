@@ -17,6 +17,7 @@ clock = pygame.time.Clock()
 fenetre = pygame.display.set_mode((800, 600))#on définie la fenetre et ses dimensions 
 fond = pygame.image.load("background_espace.png").convert()#On définie l'image background_espace comme fond de l'interface
 game_over = pygame.image.load("game_over.jpg").convert()
+fond_gagne = pygame.image.load("bravo.jpg").convert()
 tir = pygame.image.load("tir.png").convert()
 
 
@@ -70,8 +71,10 @@ fenetre.blit(poulpe.getPoulpe(), (200,300))
 list_invaders = [] #verts
 for i in range(0,10):
     # on fait i*50 pour décaler les monstres     ?
-    list_invaders.append(Invaders(pygame,100+i*50,300)) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
-    fenetre.blit(list_invaders[i].getInvaders(), (100,200)) #on colle les invaders en commençant par x=100,y=200
+    list_invaders.append(Invaders(pygame,100+i*50,300,"verts")) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
+for i in range(0,10):
+    # on fait i*50 pour décaler les monstres     ?
+    list_invaders.append(Invaders(pygame,100+i*50,200,"rouges")) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
 
 """list_invaders_b = [] #bleus
 for b in range(0,10):
@@ -79,36 +82,33 @@ for b in range(0,10):
     fenetre.blit(list_invaders_b[b].getInvaders(), (100,100))"""
 
 
+# création liste tir
+list_tirs = []
+def ajouter_tir(x,y):
+    list_tirs.append(Tir(pygame,x+20,y-20)) #+20 pour centrer l'image de tir
 
 
 
 
-tirer=0
 
-"""
-position_tir_y=0
-position_tir_x=0
-
-#creation du tir
-
-
-def tir():
+def collision_tir_invaders():
+    for i in list_invaders:
+        position_invaders = i.getPosition()
+        collision_tir = False
+        for t in list_tirs:
+            position_tir = t.getPosition()
+            if position_invaders.bottom > position_tir.top and position_invaders.top < position_tir.bottom:
+                if (position_invaders.left < position_tir.right) and (position_invaders.right > position_tir.left):
+                    collision_tir = True
+            # si le tir est tout en haut on le supprime
+            if position_tir.bottom < 0:
+                list_tirs.remove(t)
+            
+        if collision_tir:
+            list_invaders.remove(i)
+            list_tirs.remove(t)
     
-    _y = poulpe.self.position.y
-    print (tir_x)
-    print(tir_y)
-    tir_x=position_tir_x
-    print(tir_x)
-    fenetre.blit(tir, x,y)
-    pygame.display.flip()
-        
-        tirer=0
-    
-    """
-
-
-
-
+            
 
 
 def collision():
@@ -146,7 +146,8 @@ pygame.display.flip() #rafraichissment de l'image pour faire apparaitre les inva
 
 #creation  d'un boucle infinie pour que le jeu ne se ferme pas
 continuer = 1
-pygame.key.set_repeat(1,10) #on defini l'affichage d'une image toutes les 10ms
+
+#pygame.key.set_repeat(1,10) #on defini l'affichage d'une image toutes les 10ms
 stop_invaders_a_droite = False
 stop_invaders_a_gauche = True
 while continuer:
@@ -165,58 +166,64 @@ while continuer:
                             continuer = 0
 
                         if event.key == K_SPACE:
-                            tirer=1
-                            a=poulpe.getX()
-                            b=poulpe.getY()
-                            #fenetre.blit(tir, (200,300))#NE FONCTIONNE PAS !
-                            #print ("encre")
-        #pygame.display.flip()
-
-        if tirer==1:
-            print ("encre")
-            fenetre.blit(list_tirs[t].getTirs(),(a,b))
-            tirer = 0 
-            """position_tir_x=poulpe.getX()
-            position_tir_y=poulpe.getY()
-            
-            print(position_tir_x)
-            print(position_tir_y)
-            tir()"""
-                                          
+                            x=poulpe.getX()
+                            y=poulpe.getY()
+                            if len(list_tirs) == 0:
+                                ajouter_tir(x,y)
+                                #peut_tirer=False
+                          
+        #pygame.display.flip
+        collision_tir_invaders()
+        # si on reste appuyer sur gauche ou droite        
+        keys = pygame.key.get_pressed()
+        if keys[K_LEFT]:
+            poulpe.allerAgauche()
+        if keys[K_RIGHT]:
+            poulpe.allerAdroite()
+        
+   
+                    
 
         #print (collision())
         if collision():
             fenetre.blit(game_over, (0,0))   #on recolle le fond   
-
+        elif len(list_invaders) == 0:
+            fenetre.blit(fond_gagne, (0,0))   #on recolle le fond  
         else:
             
             fenetre.blit(fond, (0,0))   #on recolle le fond   
             fenetre.blit(poulpe.getPoulpe(),poulpe.getPosition())   #on recolle le poulpe a sa nouvelle position 
 
             # on affiche les monstres
-            for i in range(0,10):
+            for i in range(len(list_invaders)):
                 fenetre.blit(list_invaders[i].getInvaders(), list_invaders[i].getPosition())#collage de l'image et de la position de chaque monstre
 
+            # on affiche les tirs
+            for i in range(len(list_tirs)):
+                fenetre.blit(list_tirs[i].getTir(),list_tirs[i].getPosition())  # collage de l'image et de la position de chaque tir
 
             #on fait bouger les monstres
             if not(stop_invaders_a_droite):
-                for i in range (0,10):
+                for i in range (len(list_invaders)):
                     if not(list_invaders[i].allerAdroite()):
                         stop_invaders_a_droite = True
                         stop_invaders_a_gauche = False
-                        for a in range(0,10):
+                        for a in range(len(list_invaders)):
                             list_invaders[a].descendre()
                     
             elif not(stop_invaders_a_gauche):
-                for i in range (0,10):
+                for i in range (len(list_invaders)):
                     if not(list_invaders[i].allerAgauche()):
                         stop_invaders_a_gauche = True
                         stop_invaders_a_droite = False
-                        for a in range(0,10):
+                        for a in range(len(list_invaders)):
                             list_invaders[a].descendre()
 
         
-
+            # on fait bouger les tirs
+            for i in range(len(list_tirs)):
+                list_tirs[i].monter()
+                
         pygame.display.flip()
         clock.tick(40)
 
