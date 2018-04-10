@@ -44,14 +44,14 @@ while intr:
     pygame.display.flip() """
 
 
-
+"""
 
 #creation de la liste des tirs
 a=0
 b=0
 list_tirs = []
 for t in range (0,5):
-    list_tirs.append(Tir(pygame,a,b))
+    list_tirs.append(Tir(pygame,a,b))"""
     
 
 
@@ -67,16 +67,16 @@ fenetre.blit(poulpe.getPoulpe(), (200,300))
 
 # Création de la liste des invaders
 
-list_invaders_v = [] #verts
-for v in range(0,10):
+list_invaders = [] #verts
+for i in range(0,10):
     # on fait i*50 pour décaler les monstres     ?
-    list_invaders_v.append(Invaders(pygame,100+v*50,300)) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
-    fenetre.blit(list_invaders_v[v].getInvaders(), (100,200)) #on colle les invaders en commençant par x=100,y=200
+    list_invaders.append(Invaders(pygame,100+i*50,300)) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
+    fenetre.blit(list_invaders[i].getInvaders(), (100,200)) #on colle les invaders en commençant par x=100,y=200
 
-list_invaders_b = [] #bleus
+"""list_invaders_b = [] #bleus
 for b in range(0,10):
     list_invaders_b.append(Invaders(pygame,100+b*50,200)) 
-    fenetre.blit(list_invaders_b[b].getInvaders(), (100,100))
+    fenetre.blit(list_invaders_b[b].getInvaders(), (100,100))"""
 
 
 
