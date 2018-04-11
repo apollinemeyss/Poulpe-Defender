@@ -34,7 +34,3 @@ class Poulpe:
     def getY(self):
         return self.position.y
 
-
-    """getX = self.position.x
-
-    getY = self.position.y"""

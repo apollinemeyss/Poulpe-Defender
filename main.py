@@ -6,6 +6,7 @@ from invaders import Invaders
 from tir import Tir
 #on a importé tous les objets/classes et leurs fonctions associées 
 import pygame
+import random
 import time
 from pygame.locals import *
 
@@ -23,7 +24,7 @@ tir = pygame.image.load("tir.png").convert()
 
 fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
 
-"""intro = pygame.image.load("scenario.png").convert
+intro = pygame.image.load("scenario.png").convert()
 intr = 1
 while intr:
     fenetre.blit(intro, (0,0))
@@ -31,10 +32,10 @@ while intr:
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
                 intr = 0
-    pygame.display.flip() #Intro mais qui ne marche pas
+    pygame.display.flip() #Intro mais pas dimensionnée
 
 
-controle = pygame.image.load("controle.png").convert
+"""controle = pygame.image.load("controle.png").convert
 contr = 1
 while intr:
     fenetre.blit(contr, (0,0))
@@ -43,49 +44,39 @@ while intr:
             if event.key == K_SPACE:
                 contr = 0
     pygame.display.flip() """
-
-
-"""
-
-#creation de la liste des tirs
-a=0
-b=0
-list_tirs = []
-for t in range (0,5):
-    list_tirs.append(Tir(pygame,a,b))"""
     
-
-
-
 
 
 # creation du poulpe en initialisant un objet poulpe depuis la class Poulpe
 x = 320
 y = 420
 poulpe = Poulpe(pygame,x,y)
-fenetre.blit(poulpe.getPoulpe(), (200,300))
+#fenetre.blit(poulpe.getPoulpe(), (200,300))    ?
 
 
 # Création de la liste des invaders
 
 list_invaders = [] #verts
 for i in range(0,10):
-    # on fait i*50 pour décaler les monstres     ?
+    # on fait i*50 pour décaler les monstres     
     list_invaders.append(Invaders(pygame,100+i*50,300,"verts")) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
 for i in range(0,10):
-    # on fait i*50 pour décaler les monstres     ?
+    # on fait i*50 pour décaler les monstres     
     list_invaders.append(Invaders(pygame,100+i*50,200,"rouges")) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
 
-"""list_invaders_b = [] #bleus
-for b in range(0,10):
-    list_invaders_b.append(Invaders(pygame,100+b*50,200)) 
-    fenetre.blit(list_invaders_b[b].getInvaders(), (100,100))"""
+
 
 
 # création liste tir
 list_tirs = []
 def ajouter_tir(x,y):
     list_tirs.append(Tir(pygame,x+20,y-20)) #+20 pour centrer l'image de tir
+
+
+"""#création liste tirs_invaders
+list_tirs_inv = []
+def ajouter_tir_inv(x,y):
+    list_tirs_inv.append(Tir_Inv(pygame,"""
 
 
 
@@ -134,7 +125,7 @@ def collision():
 
 
 
-pygame.display.flip() #rafraichissment de l'image pour faire apparaitre les invaders, le poulpe et le fond 
+pygame.display.flip() #rafraichissement de l'image pour faire apparaitre les invaders, le poulpe et le fond 
 
 #score
 #score = Score('Leo')
@@ -223,6 +214,17 @@ while continuer:
             # on fait bouger les tirs
             for i in range(len(list_tirs)):
                 list_tirs[i].monter()
+
+            #on prend au hasard un invaders qui lachera un tir
+            h = random.randint(0, len(list_invaders) - 1)  
+            invader = list_invaders[h]  
+            print h
+            print invader.getPosition()
+            #print invader.getX()
+            #print invader.getY()
+            
+
+                
                 
         pygame.display.flip()
         clock.tick(40)
