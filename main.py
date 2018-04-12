@@ -4,6 +4,7 @@ from poulpe import Poulpe
 from score import Score
 from invaders import Invaders
 from tir import Tir
+from tirs_invaders import Tir_Inv
 #on a importé tous les objets/classes et leurs fonctions associées 
 import pygame
 import random
@@ -64,7 +65,10 @@ for i in range(0,10):
     # on fait i*50 pour décaler les monstres     
     list_invaders.append(Invaders(pygame,100+i*50,200,"rouges")) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
 
-
+"""#essai liste
+ma_liste = [0]
+for i in range(len(ma_liste)):
+    print i"""
 
 
 # création liste tir
@@ -73,12 +77,12 @@ def ajouter_tir(x,y):
     list_tirs.append(Tir(pygame,x+20,y-20)) #+20 pour centrer l'image de tir
 
 
-"""#création liste tirs_invaders
+#création de la liste tirs des invaders
 list_tirs_inv = []
-def ajouter_tir_inv(x,y):
-    list_tirs_inv.append(Tir_Inv(pygame,"""
+def ajouter_tir_inv(x_i,y_i):
+    list_tirs_inv.append(Tir_Inv(pygame, x_i, y_i))
 
-
+print ("au debut:",list_tirs_inv)
 
 
 
@@ -161,7 +165,8 @@ while continuer:
                             y=poulpe.getY()
                             if len(list_tirs) == 0:
                                 ajouter_tir(x,y)
-                                #peut_tirer=False
+
+                                
                           
         #pygame.display.flip
         collision_tir_invaders()
@@ -171,8 +176,7 @@ while continuer:
             poulpe.allerAgauche()
         if keys[K_RIGHT]:
             poulpe.allerAdroite()
-        
-   
+    
                     
 
         #print (collision())
@@ -192,6 +196,10 @@ while continuer:
             # on affiche les tirs
             for i in range(len(list_tirs)):
                 fenetre.blit(list_tirs[i].getTir(),list_tirs[i].getPosition())  # collage de l'image et de la position de chaque tir
+
+            # on affiche les tirs des invaders
+            for i in range(len(list_tirs_inv)):
+                fenetre.blit(list_tirs_inv[i].getTir(),list_tirs_inv[i].getPosition())  # collage de l'image et de la position de chaque tir
 
             #on fait bouger les monstres
             if not(stop_invaders_a_droite):
@@ -217,11 +225,28 @@ while continuer:
 
             #on prend au hasard un invaders qui lachera un tir
             h = random.randint(0, len(list_invaders) - 1)  
-            invader = list_invaders[h]  
-            print h
-            print invader.getPosition()
-            #print invader.getX()
-            #print invader.getY()
+            invader = list_invaders[h]
+
+            #on recupere les coordonnées de cet invaders pour lui faire créer un tir 
+            x_i = invader.getX()
+            y_i = invader.getY()
+            
+            if len (list_tirs_inv) == 0: #ne crée un tir que si il n'y a pas déjà un autre tir, niveau facile
+                ajouter_tir_inv (x_i,y_i)
+
+            print ("a chaque boucle, invader", h, list_tirs_inv)
+            
+            #on fait bouger les tirs
+            for i in range(len(list_tirs_inv)):
+                list_tirs_inv[i].descendre()
+
+            #si le tir des invaders atteint le bas, il est supprimé le la liste
+            if 
+            
+                                 
+            """print h
+            print invader.getX()
+            print invader.getY()"""
             
 
                 
