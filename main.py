@@ -46,7 +46,9 @@ while intr:
                 contr = 0
     pygame.display.flip() """
     
-
+#creation du niveau de vie
+vie=3
+print ("debut:",vie)
 
 # creation du poulpe en initialisant un objet poulpe depuis la class Poulpe
 x = 320
@@ -65,10 +67,6 @@ for i in range(0,10):
     # on fait i*50 pour décaler les monstres     
     list_invaders.append(Invaders(pygame,100+i*50,200,"rouges")) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
 
-"""#essai liste
-ma_liste = [0]
-for i in range(len(ma_liste)):
-    print i"""
 
 
 # création liste tir
@@ -80,21 +78,23 @@ def ajouter_tir(x,y):
 #création de la liste tirs des invaders
 list_tirs_inv = []
 def ajouter_tir_inv(x_i,y_i):
-    list_tirs_inv.append(Tir_Inv(pygame, x_i, y_i))
-
-print ("au debut:",list_tirs_inv)
+    list_tirs_inv.append(Tir_Inv(pygame, x_i+20, y_i+20))
 
 
 
-def collision_tir_invaders():
+def collision_tir_invaders(): #collision entre les tirs du poulpe et les invaders/ et le haut de la fenetre
     for i in list_invaders:
         position_invaders = i.getPosition()
         collision_tir = False
         for t in list_tirs:
             position_tir = t.getPosition()
+            #si le bas de l'alien est plus bas que le haut du tir mais que le tir ne l'a pas encore dépassé -> sur la meme ligne 
             if position_invaders.bottom > position_tir.top and position_invaders.top < position_tir.bottom:
+                #si la gauche de l'alien est plus a gauche que la droite du tir -> tir pas a gauche de l'alien
+                #et que la droite de l'alien est plus a droite que la gauche du tir -> tir pas à droite de l'alien => en collision
                 if (position_invaders.left < position_tir.right) and (position_invaders.right > position_tir.left):
                     collision_tir = True
+                    
             # si le tir est tout en haut on le supprime
             if position_tir.bottom < 0:
                 list_tirs.remove(t)
@@ -104,6 +104,27 @@ def collision_tir_invaders():
             list_tirs.remove(t)
     
             
+def collision_tir_poulpe():  #collision entre les tirs des invaders et le poulpe / et le bas de la fenetre
+    collision_poulpe=False
+    position_poulpe=poulpe.getPosition()   
+    #on teste les positions du poulpe (Poulpe.getPosition()) et des tirs (position_tir_inv)
+    for i in list_tirs_inv:
+        position_tir_inv = i.getPosition()
+        if (position_poulpe.top < position_tir_inv.bottom) and (position_poulpe.bottom > position_tir_inv.top):
+            if (position_poulpe.right > position_tir_inv.left) and (position_poulpe.left < position_tir_inv.right):
+                collision_poulpe=True
+                return True
+                
+                
+        #si le tir est tout en bas on le supprime
+        if position_tir_inv.top>3000: #j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs
+            list_tirs_inv.remove(i)
+
+    if collision_poulpe:
+        list_tirs_inv.remove(i)
+        
+        
+ 
 
 
 def collision():
@@ -170,6 +191,7 @@ while continuer:
                           
         #pygame.display.flip
         collision_tir_invaders()
+        collision_tir_poulpe()
         # si on reste appuyer sur gauche ou droite        
         keys = pygame.key.get_pressed()
         if keys[K_LEFT]:
@@ -177,13 +199,15 @@ while continuer:
         if keys[K_RIGHT]:
             poulpe.allerAdroite()
     
-                    
 
-        #print (collision())
-        if collision():
-            fenetre.blit(game_over, (0,0))   #on recolle le fond   
+                    
+        if collision() or vie==0:
+            fenetre.blit(game_over, (0,0))#on recolle le fond
+            print vie
+
         elif len(list_invaders) == 0:
-            fenetre.blit(fond_gagne, (0,0))   #on recolle le fond  
+            fenetre.blit(fond_gagne, (0,0))   #on recolle le fond
+            
         else:
             
             fenetre.blit(fond, (0,0))   #on recolle le fond   
@@ -233,26 +257,22 @@ while continuer:
             
             if len (list_tirs_inv) == 0: #ne crée un tir que si il n'y a pas déjà un autre tir, niveau facile
                 ajouter_tir_inv (x_i,y_i)
-
-            print ("a chaque boucle, invader", h, list_tirs_inv)
             
             #on fait bouger les tirs
             for i in range(len(list_tirs_inv)):
                 list_tirs_inv[i].descendre()
 
-            #si le tir des invaders atteint le bas, il est supprimé le la liste
-            if 
-            
+            #si le poulpe est touché par un tir, il perd une vie 
+            if collision_tir_poulpe():
+                vie = vie-1
+                print vie 
                                  
-            """print h
-            print invader.getX()
-            print invader.getY()"""
-            
+                        
 
                 
                 
         pygame.display.flip()
-        clock.tick(40)
+        clock.tick(30)
 
 
 
