@@ -18,7 +18,7 @@ clock = pygame.time.Clock()
 
 fenetre = pygame.display.set_mode((800, 600))#on définie la fenetre et ses dimensions 
 fond = pygame.image.load("background_espace.png").convert()#On définie l'image background_espace comme fond de l'interface
-game_over = pygame.image.load("game_over.jpg").convert()
+game_over = pygame.image.load("game_over.png").convert()
 fond_gagne = pygame.image.load("bravo.jpg").convert()
 tir = pygame.image.load("tir.png").convert()
 
