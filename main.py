@@ -118,11 +118,14 @@ def collision_tir_poulpe():  #collision entre les tirs des invaders et le poulpe
                 
                 
         #si le tir est tout en bas on le supprime
-        if position_tir_inv.top>3000: #j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs
+        if position_tir_inv.top>600 or collision_poulpe==True: #j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs #3000
             list_tirs_inv.remove(i)
+            print collision_poulpe
+            print collision_tir_poulpe()
 
-    if collision_poulpe:
-        list_tirs_inv.remove(i)
+        #if collision_poulpe:
+            #list_tirs_inv.remove(i)
+            #print list_tirs_inv
         
         
  
@@ -168,6 +171,7 @@ continuer = 1
 stop_invaders_a_droite = False
 stop_invaders_a_gauche = True
 while continuer:
+        temps = pygame.time.get_ticks()  #essais sur le temps pour invaders bonus + projectiles espacés + poulpe qui disparait quand il se fait touché 
         for event in pygame.event.get():   #on parcours la liste de tous les évènements pouvant être reçus
                 if event.type == QUIT:    #si l'évènement est de type QUIT (on clique sur la croix)
                         continuer = 0   #on arrête la boucle
