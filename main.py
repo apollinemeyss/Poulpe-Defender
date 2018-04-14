@@ -22,12 +22,18 @@ game_over = pygame.image.load("game_over.png").convert()
 fond_gagne = pygame.image.load("bravo.jpg").convert()
 tir = pygame.image.load("tir.png").convert()
 
+pygame.mixer.music.load("musique.wav") #On définie la musique principale du jeu
+
+
 
 fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
 
 intro = pygame.image.load("scenario.png").convert()
 controles = pygame.image.load("controles.png").convert()
 
+
+
+pygame.mixer.music.play()
 intr = 1
 while intr:
     fenetre.blit(intro, (0,0))
