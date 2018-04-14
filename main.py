@@ -26,6 +26,8 @@ tir = pygame.image.load("tir.png").convert()
 fenetre.blit(fond, (0,0))#on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
 
 intro = pygame.image.load("scenario.png").convert()
+controles = pygame.image.load("controles.png").convert()
+
 intr = 1
 while intr:
     fenetre.blit(intro, (0,0))
@@ -33,18 +35,17 @@ while intr:
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
                 intr = 0
-    pygame.display.flip() #Intro mais pas dimensionnée
+    pygame.display.flip() #Intro (scenario)
 
 
-"""controle = pygame.image.load("controle.png").convert
 contr = 1
-while intr:
-    fenetre.blit(contr, (0,0))
+while contr:
+    fenetre.blit(controles, (0,0))
     for event in pygame.event.get():
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
                 contr = 0
-    pygame.display.flip() """
+    pygame.display.flip() #Controles
     
 #creation du niveau de vie
 vie=3
