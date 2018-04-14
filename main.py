@@ -215,6 +215,8 @@ while continuer:
         if collision() or vie==0:
             fenetre.blit(game_over, (0,0))#on recolle le fond
             print vie
+            pygame.mixer.music.stop() #La musique s'arrete
+
 
         elif len(list_invaders) == 0:
             fenetre.blit(fond_gagne, (0,0))   #on recolle le fond
