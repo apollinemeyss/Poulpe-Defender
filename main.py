@@ -4,10 +4,12 @@ from poulpe import Poulpe
 from score import Score
 from invaders import Invaders
 from tir import Tir
+from bonus import Bonus
 from tirs_invaders import Tir_Inv
 #on a importé tous les objets/classes et leurs fonctions associées 
 import pygame
 import random
+from threading import Timer
 import time
 from pygame.locals import *
 
@@ -75,7 +77,19 @@ def jeu():
         # on fait i*50 pour décaler les monstres     
         list_invaders.append(Invaders(pygame,100+i*50,200,"rouges")) #inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
 
-
+    #creation de l'invader bonus
+    list_bonus = []
+    def bonus():
+        list_bonus.append(Bonus(pygame,x,y))
+        for i in range (len(list_bonus)):
+            i.allerAgauche()
+            x_b = i.getX()
+            if x_b < -20 :
+                list_bonus.remove(i)
+    def tempo():
+        t = Timer(200, bonus)
+        t.start()
+        
 
     # création liste tir
     list_tirs = []
@@ -108,6 +122,8 @@ def jeu():
                     list_tirs.remove(t)
                 
             if collision_tir:
+                #couleur=i.couleur()
+                #i.meurt()
                 list_invaders.remove(i)
                 list_tirs.remove(t)
         
@@ -115,7 +131,7 @@ def jeu():
     def collision_tir_poulpe():  #collision entre les tirs des invaders et le poulpe / et le bas de la fenetre
         collision_poulpe=False
         position_poulpe=poulpe.getPosition()   
-        #on teste les positions du poulpe (Poulpe.getPosition()) et des tirs (position_tir_inv)
+        #on teste les positions du poulpe et des tirs
         for i in list_tirs_inv:
             position_tir_inv = i.getPosition()
             if (position_poulpe.top < position_tir_inv.bottom) and (position_poulpe.bottom > position_tir_inv.top):
@@ -125,7 +141,7 @@ def jeu():
                     
                     
             #si le tir est tout en bas on le supprime
-            if position_tir_inv.top>600 or collision_poulpe==True: #j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs #3000
+            if position_tir_inv.top>3000 or collision_poulpe==True: #j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs #3000
                 list_tirs_inv.remove(i)
                 print collision_poulpe
                 print collision_tir_poulpe()
@@ -133,9 +149,7 @@ def jeu():
             #if collision_poulpe:
                 #list_tirs_inv.remove(i)
                 #print list_tirs_inv
-            
-            
-     
+        
 
 
     def collision():
@@ -206,6 +220,8 @@ def jeu():
             #pygame.display.flip
             collision_tir_invaders()
             collision_tir_poulpe()
+            tempo()
+            
             # si on reste appuyer sur gauche ou droite        
             keys = pygame.key.get_pressed()
             if keys[K_LEFT]:
@@ -292,9 +308,11 @@ def jeu():
                     vie = vie-1
                     print vie 
                                      
-                            
+                #set_timer(Bonus(), 3000)
+                #pygame.time.set_timer(bonus, 3000)
+                
 
-                    
+                
                     
             pygame.display.flip()
             clock.tick(30)
