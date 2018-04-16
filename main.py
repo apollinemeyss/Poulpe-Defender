@@ -9,8 +9,6 @@ from tirs_invaders import Tir_Inv
 #on a importé tous les objets/classes et leurs fonctions associées 
 import pygame
 import random
-from threading import Timer
-import time
 from pygame.locals import *
 
 # Initialisation de pygame et des variables du jeu
@@ -276,9 +274,6 @@ def jeu():
             x_invaders = invader.getX()
             y_invaders = invader.getY()
             ajouter_tir_invaders(x_invaders,y_invaders)
-        #   list_tirs_invaders(x_i, y_i)
-
-
 
 
         fenetre.blit(fond, (0, 0))  # on recolle le fond
