@@ -63,10 +63,11 @@ list_tirs_poulpe = []
 
 
 #================= Fin initialisation =====================
-# Ajoute un tir du poule à la liste des tirs
+
+# Ajoute un tir du poulpe à la liste des tirs
 def ajouter_tir(x, y):
     global list_tirs_poulpe
-    print("Nombre de tirs: ", len(list_tirs_poulpe))
+    #print("Nombre de tirs: ", len(list_tirs_poulpe))
     list_tirs_poulpe.append(Tir(pygame, x + 20, y - 20))  # +20 pour centrer l'image de tir
 
 def ajouter_tir_invaders(x_i, y_i):
@@ -96,8 +97,8 @@ def introduction():
                        explication = False
                 if event.key == QUIT or event.key == K_ESCAPE:
                         jouer = False
-        # On récupère les événements 15 fois par seconde, pour éviter de boucler trop rapidement
-        clock.tick(15)
+        # On récupère les événements 10 fois par seconde, pour éviter de boucler trop rapidement
+        clock.tick(10)
 
     # On affiche la panneau contrôle
     fenetre.blit(controles, (0, 0))
@@ -110,8 +111,8 @@ def introduction():
                 if event.key == QUIT or event.key == K_ESCAPE:
                         jouer = False
 
-        # On récupère les événements 15 fois par seconde, pour éviter de boucler trop rapidement
-        clock.tick(15)
+        # On récupère les événements 10 fois par seconde, pour éviter de boucler trop rapidement
+        clock.tick(10)
 
 # Affiche le panneau Game Over
 def gameOver():
@@ -126,6 +127,7 @@ def gameOver():
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.key == K_SPACE:
+                    jouer = True            #?
                     afficher_gameover = False
                 if event.key == QUIT or event.key == K_ESCAPE:
                         jouer = False
@@ -170,7 +172,7 @@ def collision_tir_poulpe():  # collision entre les tirs des invaders et le poulp
                 collision_poulpe = True
 
         # si le tir est tout en bas on le supprime
-        if position_tir_inv.top > 800:  # j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs #3000
+        if position_tir_inv.top > 1000:  # j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs #3000
             list_tirs_invaders.remove(i)
 
         if collision_poulpe:
@@ -201,8 +203,7 @@ def collision_tir_invaders():  # collision entre les tirs du poulpe et les invad
                 list_tirs_poulpe.remove(t)
 
         if collision_tir:
-            # couleur=i.couleur()
-            # i.meurt()
+            #fenetre.blit 
             list_invaders.remove(i)
             list_tirs_poulpe.remove(t)
 
@@ -217,13 +218,13 @@ def collision():
         if position_invaders.bottom > 420:
             return True
         if position_invaders.bottom < position_poulpe.top:
-            # rectB est au-dessus
+            # l'invader est au-dessus
             return False
         if position_invaders.left > position_poulpe.right:
-            # rectB est à droite
+            # l'invader est à droite
             return False
         if position_invaders.top > position_poulpe.bottom:
-            # rectB est en-dessous
+            # l'invader est en-dessous
             return False
         else:
             # Dans tous les autres cas il y a collision
@@ -245,19 +246,22 @@ def jeu():
     stop_invaders_a_gauche = True
 
     while jouer:
-        print ("=======================")
-        print ("Nombre de vie: ", vie)
-        print ("Gagner: ", gagner)
-        print ("Nombre invaders: ", len(list_invaders))
-        print ("Nombre de tirs du poulpe: ", len(list_tirs_poulpe))
-        print ("Nombre de tirs des invaders: ", len(list_tirs_invaders))
-        print ("=======================")
+        #print ("=======================")
+        #print ("Nombre de vie: ", vie)
+        #print ("Gagner: ", gagner)
+        #print ("Nombre invaders: ", len(list_invaders))
+        #print ("Nombre de tirs du poulpe: ", len(list_tirs_poulpe))
+        #print ("Nombre de tirs des invaders: ", len(list_tirs_invaders))
+        #print ("=======================")
 
         collision_tir_invaders()
-        if collision() or collision_tir_poulpe():
+        
+        #si le poulpe est touché il perd une vie 
+        if collision_tir_poulpe():
             vie -= 1
-
-        if vie < 0:
+            
+        #si plus de vie ou que les invaders sont trop descendus
+        if vie == 0 or collision():
             break # Arrete la boucle
 
         # Si plus d'invaders le joueur a gagné
@@ -280,7 +284,8 @@ def jeu():
         fenetre.blit(poulpe.getPoulpe(), poulpe.getPosition())  # on recolle le poulpe a sa nouvelle position
 
         # Affiche le nombre de vie
-        fenetre.blit(font.render('Vie: ' + str(vie), True, (15,183,132)), (700, 30))
+        fenetre.blit(font.render('Vie: ' + str(vie), True, (15,183,132)), (700, 30)) #render(text, antialias, color, background=None) -> Surface
+        # crée une nouvelle surface sur lequel on affiche le texte      couleur ? 
 
 
 
@@ -296,7 +301,7 @@ def jeu():
         # on affiche et on fait bouger les tirs des invaders
         for i in range(len(list_tirs_invaders)):
             fenetre.blit(list_tirs_invaders[i].getTir(),
-                         list_tirs_invaders[i].getPosition())  # collage de l'image et de la position de chaque monstre
+                         list_tirs_invaders[i].getPosition())  # collage de l'image et de la position de chaque tir de monstre
             list_tirs_invaders[i].descendre()
 
         # on affiche les monstres
