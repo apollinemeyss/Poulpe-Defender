@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 from poulpe import Poulpe
 from score import Score
 from invaders import Invaders
@@ -66,13 +66,13 @@ list_tirs_poulpe = []
 
 # Ajoute un tir du poulpe à la liste des tirs
 def ajouter_tir(x, y):
-    global list_tirs_poulpe
-    #print("Nombre de tirs: ", len(list_tirs_poulpe))
+    global list_tirs_poulpe  # à chaque fois on définit les variables communes à toutes les fonctions
+    #on ajoute un tir dans la liste, avec les position du poulpe (car doit etre affiché au dessus de lui)
     list_tirs_poulpe.append(Tir(pygame, x + 20, y - 20))  # +20 pour centrer l'image de tir
 
 def ajouter_tir_invaders(x_i, y_i):
     global list_tirs_invaders
-    list_tirs_invaders.append(Tir_Inv(pygame, x_i + 20, y_i + 20))
+    list_tirs_invaders.append(Tir_Inv(pygame, x_i + 20, y_i + 20)) 
 
 
 # Fonction d'affichage de l'introduction du jeu
@@ -92,11 +92,11 @@ def introduction():
     pygame.display.flip()
     while explication and jouer:
         for event in pygame.event.get():
-            if event.type == KEYDOWN:
-                if event.key == K_SPACE:
-                       explication = False
-                if event.key == QUIT or event.key == K_ESCAPE:
-                        jouer = False
+            if event.type == KEYDOWN: 
+                if event.key == K_SPACE:  #Si on appuie sur espace:
+                       explication = False   #la fenetre se ferme et on passe à la prochaine
+                if event.key == QUIT or event.key == K_ESCAPE: #si on clique sur la croix ou si on fait echap :
+                        jouer = False  #le jeu se ferme 
         # On récupère les événements 10 fois par seconde, pour éviter de boucler trop rapidement
         clock.tick(10)
 
@@ -172,9 +172,10 @@ def collision_tir_poulpe():  # collision entre les tirs des invaders et le poulp
                 collision_poulpe = True
 
         # si le tir est tout en bas on le supprime
-        if position_tir_inv.top > 1000:  # j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs #3000
+        if position_tir_inv.top > 2000:  # j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs #3000
             list_tirs_invaders.remove(i)
 
+        #si le poulpe est touche, le tir disparait et l'information de la collision est envoyé 
         if collision_poulpe:
             list_tirs_invaders.remove(i)
             return True
@@ -212,9 +213,10 @@ def collision():
     global list_invaders
 
     position_poulpe = poulpe.getPosition()
+    #pour tous les tirs des invaders, on compare sa position avec celle du poulpe, par élimination
     for i in list_invaders:
         position_invaders = i.getPosition()
-        # Si hors du terrain
+        # Si hors du terrain, trop bas 
         if position_invaders.bottom > 420:
             return True
         if position_invaders.bottom < position_poulpe.top:
