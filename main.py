@@ -36,24 +36,7 @@ pygame.mixer.music.load("musique.wav") #On définie la musique principale du jeu
 # Initialisation des booléens pour les boucles
 jouer = True
 gagner = False
-
-# Création du poulpe en initialisant un objet poulpe depuis la class Poulpe
-poulpe_position_initial_x = 320
-poulpe_position_initial_y = 420
-poulpe = Poulpe(pygame, poulpe_position_initial_x, poulpe_position_initial_y)
-
-# Initialisation de la liste des invaders
-list_invaders = []
-
-for i in range(0, 10):
-    # on fait i*50 pour décaler les monstres
-    list_invaders.append(Invaders(pygame, 100 + i * 50, 300,
-                                  "verts"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
-for i in range(0, 10):
-    # on fait i*50 pour décaler les monstres
-    list_invaders.append(Invaders(pygame, 100 + i * 50, 200,
-                                  "rouges"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
-
+    
 # Initialisation de la liste tirs des invaders
 list_tirs_invaders = []
 
@@ -61,8 +44,47 @@ list_tirs_invaders = []
 # Initialisation de la liste des tirs
 list_tirs_poulpe = []
 
+#On introduit une variable score pour ajouter un second but au jeu, il est conservé au cours des parties si on ne perd pas 
+score = 0 
+
 
 #================= Fin initialisation =====================
+
+# fonction pour que l'on puisse rejouer à l'infini, replace les invaders et le poulpe
+def reinitialisation():
+    
+    # On récupère les variables globales
+    global jouer
+    global gagner
+    global list_tirs_poulpe
+    global list_invaders
+    global list_tirs_invaders
+    global poulpe
+    global score 
+
+    
+    # Initialisation de la liste des invaders
+    list_invaders = []
+
+    for i in range(0, 10):
+        # on fait i*50 pour décaler les monstres
+        list_invaders.append(Invaders(pygame, 100 + i * 50, 300,
+                                      "verts"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
+    for i in range(0, 10):
+        # on fait i*50 pour décaler les monstres
+        list_invaders.append(Invaders(pygame, 100 + i * 50, 200,
+                                      "rouges"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
+
+
+    # Création du poulpe en initialisant un objet poulpe depuis la class Poulpe
+    poulpe_position_initial_x = 320
+    poulpe_position_initial_y = 420
+    poulpe = Poulpe(pygame, poulpe_position_initial_x, poulpe_position_initial_y)
+
+    # On remet les booleens a zero
+    jouer = True
+    gagner = False
+
 
 # Ajoute un tir du poulpe à la liste des tirs
 def ajouter_tir(x, y):
@@ -87,7 +109,7 @@ def introduction():
 
     fenetre.blit(fond, (0,0)) # on colle le fond créé sur la fenetre, en définissant les coordonnées du point de collage(haut gauche)
 
-    # On affiche le panneau intro
+    # On affiche le panneau explication
     fenetre.blit(intro, (0,0))
     pygame.display.flip()
     while explication and jouer:
@@ -118,6 +140,10 @@ def introduction():
 def gameOver():
     # On récupère les variables globales
     global jouer
+    global score
+
+    #Si game over le score est remis à 0
+    score = 0
 
     afficher_gameover= True
     pygame.mixer.music.stop()
@@ -186,6 +212,7 @@ def collision_tir_poulpe():  # collision entre les tirs des invaders et le poulp
 def collision_tir_invaders():  # collision entre les tirs du poulpe et les invaders/ et le haut de la fenetre
     global list_tirs_poulpe
     global list_invaders
+    global score 
 
     for i in list_invaders:
         position_invaders = i.getPosition()
@@ -207,6 +234,8 @@ def collision_tir_invaders():  # collision entre les tirs du poulpe et les invad
             #fenetre.blit 
             list_invaders.remove(i)
             list_tirs_poulpe.remove(t)
+            #si un invader est touché on gagne 100 points
+            score += 100
 
 def collision():
     global poulpe
@@ -271,27 +300,28 @@ def jeu():
             gagner = True
             break # Arrete la boucle
 
+        #tirs des invaders 
         if len(list_tirs_invaders) == 0:  # ne crée un tir que si il n'y a pas déjà un autre tir, niveau facile
             # on prend au hasard un invaders qui lachera un tir
-            h = random.randint(0, len(list_invaders) - 1)
-            invader = list_invaders[h]
+            al = random.randint(0, len(list_invaders)-1)
+            invader = list_invaders[al]
 
             # on recupere les coordonnées de cet invaders pour lui faire créer un tir
             x_invaders = invader.getX()
             y_invaders = invader.getY()
             ajouter_tir_invaders(x_invaders,y_invaders)
 
-
+        #affichage du fond et du poulpe 
         fenetre.blit(fond, (0, 0))  # on recolle le fond
         fenetre.blit(poulpe.getPoulpe(), poulpe.getPosition())  # on recolle le poulpe a sa nouvelle position
 
         # Affiche le nombre de vie
-        fenetre.blit(font.render('Vie: ' + str(vie), True, (15,183,132)), (700, 30)) #render(text, antialias, color, background=None) -> Surface
-        # crée une nouvelle surface sur lequel on affiche le texte      couleur ? 
+        fenetre.blit(font.render('Vie: ' + str(vie), True, (15,183,132)), (10, 5)) #render(text, antialias, color, background=None) -> Surface
+        # crée une nouvelle surface sur lequel on affiche le texte      couleur ?
 
-
-
-
+        # Affiche le score 
+        fenetre.blit(font.render('Score: ' + str(score), True, (255,0,0)), (10, 35)) #render(text, antialias, color, background=None) -> Surface
+        # font.render crée une nouvelle surface sur lequel on affiche le texte 
 
 
         # on affiche et on bouge les tirs du poulpe
@@ -366,6 +396,7 @@ def jeu():
 while jouer:
     pygame.mixer.music.play()
     introduction()
+    reinitialisation()
     jeu()
     if gagner:
         gagne()
