@@ -77,12 +77,12 @@ def reinitialisation():
     for i in range(0, 11):
         # on fait i*50 pour décaler les monstres
         list_invaders.append(Invaders(pygame, 100 + i * 50, 200,
-                                      "verts"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
+                                      "marrons"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
 
     for i in range(0, 11):
         # on fait i*50 pour décaler les monstres
         list_invaders.append(Invaders(pygame, 100 + i * 50, 150,
-                                      "rouges"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
+                                      "bleu"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
 
 
     # Création du poulpe en initialisant un objet poulpe depuis la class Poulpe
