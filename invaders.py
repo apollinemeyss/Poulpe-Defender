@@ -10,11 +10,15 @@ class Invaders:
         self.pygame = pygame
         if couleur == "verts":
             self.invaders = self.pygame.image.load("invaders.png").convert_alpha()#alpha pour enlever la partie blanche autour de l'image
+            #color = "verts"
         if couleur == "rouges":
+            #color = "rouges"
             self.invaders = self.pygame.image.load("invaders_rouges.png").convert_alpha()#alpha pour enlever la partie blanche autour de l'image
         if couleur == "marrons":
+            #color == "marrons"
             self.invaders = self.pygame.image.load("invadermarron.png").convert_alpha()#alpha pour enlever la partie blanche autour de l'image
         if couleur == "bleu":
+            #color == "bleus"
             self.invaders = self.pygame.image.load("invaderbleu.png").convert_alpha()#alpha pour enlever la partie blanche autour de l'image
 
         self.position = self.invaders.get_rect()

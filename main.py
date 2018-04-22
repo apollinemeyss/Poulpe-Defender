@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 #-*- coding: utf-8 -*-
 from poulpe import Poulpe
-from score import Score
 from invaders import Invaders
 from tir import Tir
-#from bonus import Bonus
 from tirs_invaders import Tir_Inv
 #on a importé tous les objets/classes et leurs fonctions associées 
 import pygame
@@ -23,12 +21,12 @@ font = pygame.font.SysFont('Arial', 25)
 
 # Initialisation des images
 fenetre = pygame.display.set_mode((800, 600))#on définie la fenetre et ses dimensions
-fond = pygame.image.load("background_espace.png").convert()#On définie l'image background_espace comme fond de l'interface
-game_over = pygame.image.load("game_over.png").convert()
-fond_gagne = pygame.image.load("bravo.png").convert()
-tir = pygame.image.load("tir.png").convert()
-intro = pygame.image.load("scenario.png").convert()
-controles = pygame.image.load("controles.png").convert()
+fond = pygame.image.load("background_espace.png")#On définie l'image background_espace comme fond de l'interface
+game_over = pygame.image.load("game_over.png")
+fond_gagne = pygame.image.load("game_over.png")
+tir = pygame.image.load("tir.png")
+intro = pygame.image.load("scenario.png")
+controles = pygame.image.load("controles.png")
 
 # Initialisation de la musique
 pygame.mixer.music.load("musique.wav") #On définie la musique principale du jeu
@@ -155,16 +153,17 @@ def gameOver():
     score = 0
 
     afficher_gameover= True
-    pygame.mixer.music.stop()
+    
     fenetre.blit(game_over, (0, 0))  # on recolle le fond
     pygame.display.flip()
     while afficher_gameover and jouer:
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.key == K_SPACE:
-                    jouer = True            #?
+                    jouer = True           
                     afficher_gameover = False
                 if event.key == QUIT or event.key == K_ESCAPE:
+                        pygame.mixer.music.stop()
                         jouer = False
 
         # On récupère les événements 15 fois par seconde, pour éviter de boucler trop rapidement
@@ -176,7 +175,7 @@ def gagne():
     global jouer
 
     afficher_gagne = True
-    pygame.mixer.music.stop()
+    
     fenetre.blit(fond_gagne, (0, 0))  # on recolle le fond
     pygame.display.flip()
     while afficher_gagne and jouer:
@@ -185,6 +184,7 @@ def gagne():
                 if event.key == K_SPACE:
                     afficher_gagne = False
                 if event.key == QUIT or event.key == K_ESCAPE:
+                    pygame.mixer.music.stop()
                     jouer = False
 
         # On récupère les événements 15 fois par seconde, pour éviter de boucler trop rapidement
@@ -207,7 +207,7 @@ def collision_tir_poulpe():  # collision entre les tirs des invaders et le poulp
                 collision_poulpe = True
 
         # si le tir est tout en bas on le supprime
-        if position_tir_inv.top > 2000:  # j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs #3000
+        if position_tir_inv.top > 2000:  # j'ai pas trouvé d'autres moyen d'inserer un temps entre chaque tirs 
             list_tirs_invaders.remove(i)
 
         #si le poulpe est touche, le tir disparait et l'information de la collision est envoyé 
@@ -244,6 +244,7 @@ def collision_tir_invaders():  # collision entre les tirs du poulpe et les invad
             list_invaders.remove(i)
             list_tirs_poulpe.remove(t)
             #si un invader est touché on gagne 100 points
+            #if color = "bleus"
             score += 100
 
 def collision():
@@ -263,8 +264,8 @@ def collision():
         if position_invaders.left > position_poulpe.right:
             # l'invader est à droite
             return False
-        if position_invaders.top > position_poulpe.bottom:
-            # l'invader est en-dessous
+        if position_invaders.right < position_poulpe.left:
+            #l'invader est à gauche
             return False
         else:
             # Dans tous les autres cas il y a collision
@@ -305,7 +306,7 @@ def jeu():
             break # Arrete la boucle
 
         # Si plus d'invaders le joueur a gagné
-        if len(list_invaders) <= 0:
+        if len(list_invaders) == 0:
             gagner = True
             break # Arrete la boucle
 
@@ -402,9 +403,9 @@ def jeu():
 #=========================================================================
 
 # Boucle principale du jeu, on peut rejouer tant qu'on a pas quitté le jeu
+introduction()
+pygame.mixer.music.play()
 while jouer:
-    pygame.mixer.music.play()
-    introduction()
     reinitialisation()
     jeu()
     if gagner:
