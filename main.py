@@ -23,7 +23,7 @@ font = pygame.font.SysFont('Arial', 25)
 fenetre = pygame.display.set_mode((800, 600))#on définie la fenetre et ses dimensions
 fond = pygame.image.load("background_espace.png")#On définie l'image background_espace comme fond de l'interface
 game_over = pygame.image.load("game_over.png")
-fond_gagne = pygame.image.load("game_over.png")
+fond_gagne = pygame.image.load("bravo.png")
 tir = pygame.image.load("tir.png")
 intro = pygame.image.load("scenario.png")
 controles = pygame.image.load("controles.png")
@@ -80,7 +80,7 @@ def reinitialisation():
     for i in range(0, 11):
         # on fait i*50 pour décaler les monstres
         list_invaders.append(Invaders(pygame, 100 + i * 50, 150,
-                                      "bleu"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
+                                      "bleus"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
 
 
     # Création du poulpe en initialisant un objet poulpe depuis la class Poulpe
@@ -159,13 +159,9 @@ def gameOver():
     while afficher_gameover and jouer:
         for event in pygame.event.get():
             if event.type == KEYDOWN:
-                if event.key == K_SPACE:
-<<<<<<< HEAD
-                    jouer = True           
-=======
+                if event.key == K_SPACE:          
                     jouer = True
                     pygame.mixer.music.play()
->>>>>>> be52dc5a8bcbc665a7b5c08cb7728f119d920148
                     afficher_gameover = False
                 if event.key == QUIT or event.key == K_ESCAPE:
                         pygame.mixer.music.stop()
@@ -180,10 +176,7 @@ def gagne():
     global jouer
 
     afficher_gagne = True
-<<<<<<< HEAD
     
-=======
->>>>>>> be52dc5a8bcbc665a7b5c08cb7728f119d920148
     fenetre.blit(fond_gagne, (0, 0))  # on recolle le fond
     pygame.display.flip()
     while afficher_gagne and jouer:
@@ -252,7 +245,6 @@ def collision_tir_invaders():  # collision entre les tirs du poulpe et les invad
             list_invaders.remove(i)
             list_tirs_poulpe.remove(t)
             #si un invader est touché on gagne 100 points
-            #if color = "bleus"
             score += 100
 
 def collision():
@@ -260,24 +252,18 @@ def collision():
     global list_invaders
 
     position_poulpe = poulpe.getPosition()
-    #pour tous les tirs des invaders, on compare sa position avec celle du poulpe, par élimination
+    #pour tous les tirs des invaders, on compare leur position avec celle du poulpe
     for i in list_invaders:
         position_invaders = i.getPosition()
         # Si hors du terrain, trop bas 
         if position_invaders.bottom > 420:
             return True
-        if position_invaders.bottom < position_poulpe.top:
-            # l'invader est au-dessus
-            return False
-        if position_invaders.left > position_poulpe.right:
-            # l'invader est à droite
-            return False
-        if position_invaders.right < position_poulpe.left:
-            #l'invader est à gauche
-            return False
+        if (position_poulpe.top < position_invaders.bottom) and (position_poulpe.bottom > position_invaders.top):
+            if (position_poulpe.right > position_invaders.left) and (position_poulpe.left < position_invaders.right):
+                return True
         else:
-            # Dans tous les autres cas il y a collision
-            return True
+            return False 
+
 
 # Fonction principale du jeu
 def jeu():
@@ -410,13 +396,11 @@ def jeu():
 
 #=========================================================================
 
+#On lance l'introduction et la musique avant la boucle principale, histoire qu'elle ne s'arrête pas quand le jeu se relance
 introduction()
 pygame.mixer.music.play()
-#On lance l'introduction et la musique avant la boucle principale, histoire qu'elle ne s'arrête pas quand le jeu se relance
 
 # Boucle principale du jeu, on peut rejouer tant qu'on a pas quitté le jeu
-introduction()
-pygame.mixer.music.play()
 while jouer:
     reinitialisation()
     jeu()
