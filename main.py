@@ -160,7 +160,12 @@ def gameOver():
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.key == K_SPACE:
+<<<<<<< HEAD
                     jouer = True           
+=======
+                    jouer = True
+                    pygame.mixer.music.play()
+>>>>>>> be52dc5a8bcbc665a7b5c08cb7728f119d920148
                     afficher_gameover = False
                 if event.key == QUIT or event.key == K_ESCAPE:
                         pygame.mixer.music.stop()
@@ -175,7 +180,10 @@ def gagne():
     global jouer
 
     afficher_gagne = True
+<<<<<<< HEAD
     
+=======
+>>>>>>> be52dc5a8bcbc665a7b5c08cb7728f119d920148
     fenetre.blit(fond_gagne, (0, 0))  # on recolle le fond
     pygame.display.flip()
     while afficher_gagne and jouer:
@@ -401,6 +409,10 @@ def jeu():
 
 
 #=========================================================================
+
+introduction()
+pygame.mixer.music.play()
+#On lance l'introduction et la musique avant la boucle principale, histoire qu'elle ne s'arrête pas quand le jeu se relance
 
 # Boucle principale du jeu, on peut rejouer tant qu'on a pas quitté le jeu
 introduction()
