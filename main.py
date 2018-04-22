@@ -66,13 +66,22 @@ def reinitialisation():
     # Initialisation de la liste des invaders
     list_invaders = []
 
-    for i in range(0, 10):
+    for i in range(0, 11):
         # on fait i*50 pour décaler les monstres
         list_invaders.append(Invaders(pygame, 100 + i * 50, 300,
                                       "verts"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
-    for i in range(0, 10):
+    for i in range(0, 11):
+        # on fait i*50 pour décaler les monstres
+        list_invaders.append(Invaders(pygame, 100 + i * 50, 250,
+                                      "rouges"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
+    for i in range(0, 11):
         # on fait i*50 pour décaler les monstres
         list_invaders.append(Invaders(pygame, 100 + i * 50, 200,
+                                      "verts"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
+
+    for i in range(0, 11):
+        # on fait i*50 pour décaler les monstres
+        list_invaders.append(Invaders(pygame, 100 + i * 50, 150,
                                       "rouges"))  # inserer dans la liste(en commençant par la fin)les invaders et leurs coordonnées x,y
 
 

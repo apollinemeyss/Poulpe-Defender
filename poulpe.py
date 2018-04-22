@@ -15,12 +15,12 @@ class Poulpe:
 
     def allerAdroite(self):
         if (self.position.x + 15  < 750 ) and ( self.position.x + 15 > 0):
-            self.position = self.position.move(5,0)
+            self.position = self.position.move(7,0)
 
 
     def allerAgauche(self):
         if (self.position.x - 15 < 750) and ( self.position.x - 15 > 0):
-            self.position = self.position.move(-5,0)
+            self.position = self.position.move(-7,0)
 
 
     def getPoulpe(self):
